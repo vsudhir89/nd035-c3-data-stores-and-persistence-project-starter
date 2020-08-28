@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Schedule {
@@ -31,6 +33,7 @@ public class Schedule {
             joinColumns = {@JoinColumn(name = "schedule_id")},
             inverseJoinColumns = {@JoinColumn(name = "employee_id")}
     )
+    @Cascade(CascadeType.ALL)
     private List<Employee> employees;
 
     @ManyToMany
@@ -39,6 +42,7 @@ public class Schedule {
             joinColumns = {@JoinColumn(name = "schedule_id")},
             inverseJoinColumns = {@JoinColumn(name = "pet_id")}
     )
+    @Cascade(CascadeType.ALL)
     private List<Pet> pets;
 
     @ManyToMany
@@ -47,10 +51,12 @@ public class Schedule {
             joinColumns = {@JoinColumn(name = "schedule_id")},
             inverseJoinColumns = {@JoinColumn(name = "customer_id")}
     )
+    @Cascade(CascadeType.ALL)
     private List<Customer> customers;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
+    @Cascade(CascadeType.ALL)
     private Set<EmployeeSkill> activities = new HashSet<>();
 
     public Schedule() { }

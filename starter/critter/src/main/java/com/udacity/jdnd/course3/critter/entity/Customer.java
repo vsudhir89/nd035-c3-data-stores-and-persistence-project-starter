@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Customer extends User {
@@ -23,6 +24,7 @@ public class Customer extends User {
             joinColumns = {@JoinColumn(name = "customer_id")},
             inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
     )
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Schedule> schedules;
 
     public Customer(String name) {

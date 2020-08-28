@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Nationalized;
 
 @Entity
@@ -29,6 +33,7 @@ public class Pet {
     @Nationalized
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private PetType type;
 
     private LocalDate birthDate;
@@ -42,10 +47,10 @@ public class Pet {
             joinColumns = {@JoinColumn(name = "pet_id")},
             inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
     )
+    @Cascade(CascadeType.ALL)
     private List<Schedule> schedules;
 
-    public Pet() {
-    }
+    public Pet() { }
 
     public Pet(String name, PetType type, LocalDate birthDate, String notes) {
         this.name = name;

@@ -12,16 +12,20 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Employee extends User {
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
+    @Cascade(CascadeType.ALL)
     private Set<EmployeeSkill> skillSet = new HashSet<>();
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
+    @Cascade(CascadeType.ALL)
     private Set<DayOfWeek> daysOfWeek = new HashSet<>();
 
     @ManyToMany
@@ -30,6 +34,7 @@ public class Employee extends User {
             joinColumns = {@JoinColumn(name = "employee_id")},
             inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
     )
+    @Cascade(CascadeType.ALL)
     private List<Schedule> schedules;
 
     public Employee(String name, Set<EmployeeSkill> skillSet) {
