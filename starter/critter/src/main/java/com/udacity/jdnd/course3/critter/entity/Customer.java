@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.entity;
 
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,9 @@ import org.hibernate.annotations.Cascade;
 public class Customer extends User {
 
     private String phoneNumber;
+
+    @Column(length = 1000)
+    private String notes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Pet> pets;
@@ -30,6 +34,8 @@ public class Customer extends User {
     public Customer(String name) {
         super(name);
     }
+
+    public Customer() {}
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -53,5 +59,13 @@ public class Customer extends User {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

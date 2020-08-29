@@ -42,6 +42,8 @@ public class Employee extends User {
         this.skillSet = skillSet;
     }
 
+    public Employee() {}
+
     public Set<EmployeeSkill> getSkillSet() {
         return skillSet;
     }
