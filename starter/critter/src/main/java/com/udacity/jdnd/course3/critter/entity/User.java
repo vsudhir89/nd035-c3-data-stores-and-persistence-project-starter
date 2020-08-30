@@ -13,7 +13,7 @@ import org.hibernate.annotations.Nationalized;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Nationalized

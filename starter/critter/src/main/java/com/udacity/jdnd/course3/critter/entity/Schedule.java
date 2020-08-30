@@ -22,7 +22,7 @@ import org.hibernate.annotations.CascadeType;
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     private LocalDate date;
