@@ -1,7 +1,9 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
+import com.udacity.jdnd.course3.critter.service.PetService;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ public class UserController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    PetService petService;
+
     // ----------------------------------- Customer/Owner ------------------------------------
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
@@ -53,6 +58,11 @@ public class UserController {
         List<CustomerDTO> allCustomers = new ArrayList<>();
         savedCustomers.forEach(customer -> {
             CustomerDTO newCustomer = new CustomerDTO();
+
+            List<Long> petIdsForNewCustomer = new ArrayList<>();
+            customer.getPets().forEach(pet -> petIdsForNewCustomer.add(pet.getId()));
+            newCustomer.setPetIds(petIdsForNewCustomer);
+
             BeanUtils.copyProperties(customer, newCustomer);
             allCustomers.add(newCustomer);
         });
@@ -62,7 +72,19 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        Pet pet = petService.getPetById(petId);
+        CustomerDTO ownerToReturn = new CustomerDTO();
+        if (pet != null) {
+            Customer owner = customerService.getCustomerByPet(pet);
+
+            List<Long> petIds = new ArrayList<>();
+
+            owner.getPets().forEach(ownerPet -> petIds.add(ownerPet.getId()));
+            ownerToReturn.setPetIds(petIds);
+
+            BeanUtils.copyProperties(owner, ownerToReturn);
+        }
+        return ownerToReturn;
     }
 
     // ------------------------------------ Employee -------------------------------------
