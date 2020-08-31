@@ -1,8 +1,10 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
+import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class UserController {
 
     @Autowired
     PetService petService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     // ----------------------------------- Customer/Owner ------------------------------------
     @PostMapping("/customer")
@@ -90,12 +95,21 @@ public class UserController {
     // ------------------------------------ Employee -------------------------------------
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        Employee employeeToSave = new Employee(employeeDTO.getName(), employeeDTO.getSkills());
+        employeeToSave.setDaysAvailable(employeeDTO.getDaysAvailable());
+        Employee savedEmployee = employeeService.saveEmployee(employeeToSave);
+
+        EmployeeDTO employeeToReturn = new EmployeeDTO();
+        BeanUtils.copyProperties(savedEmployee, employeeToReturn);
+        return employeeToReturn;
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        Employee savedEmployee = employeeService.findEmployeeById(employeeId);
+        EmployeeDTO employeeToReturn = new EmployeeDTO();
+        BeanUtils.copyProperties(savedEmployee, employeeToReturn);
+        return employeeToReturn;
     }
 
     @PutMapping("/employee/{employeeId}")

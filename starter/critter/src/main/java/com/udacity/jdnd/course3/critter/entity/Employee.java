@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.entity;
 
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,12 +22,12 @@ public class Employee extends User {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @Cascade(CascadeType.ALL)
-    private Set<EmployeeSkill> skillSet = new HashSet<>();
+    private Set<EmployeeSkill> skills = new HashSet<>();
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @Cascade(CascadeType.ALL)
-    private Set<DayOfWeek> daysOfWeek = new HashSet<>();
+    private Set<DayOfWeek> daysAvailable = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -35,29 +36,29 @@ public class Employee extends User {
             inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
     )
     @Cascade(CascadeType.ALL)
-    private List<Schedule> schedules;
+    private List<Schedule> schedules = new ArrayList<>();
 
-    public Employee(String name, Set<EmployeeSkill> skillSet) {
+    public Employee(String name, Set<EmployeeSkill> skills) {
         super(name);
-        this.skillSet = skillSet;
+        this.skills = skills;
     }
 
     public Employee() {}
 
-    public Set<EmployeeSkill> getSkillSet() {
-        return skillSet;
+    public Set<EmployeeSkill> getSkills() {
+        return skills;
     }
 
-    public void setSkillSet(Set<EmployeeSkill> skillSet) {
-        this.skillSet = skillSet;
+    public void setSkills(Set<EmployeeSkill> skills) {
+        this.skills = skills;
     }
 
-    public Set<DayOfWeek> getDaysOfWeek() {
-        return daysOfWeek;
+    public Set<DayOfWeek> getDaysAvailable() {
+        return daysAvailable;
     }
 
-    public void setDaysOfWeek(Set<DayOfWeek> daysOfWeek) {
-        this.daysOfWeek = daysOfWeek;
+    public void setDaysAvailable(Set<DayOfWeek> daysAvailable) {
+        this.daysAvailable = daysAvailable;
     }
 
     public List<Schedule> getSchedules() {
