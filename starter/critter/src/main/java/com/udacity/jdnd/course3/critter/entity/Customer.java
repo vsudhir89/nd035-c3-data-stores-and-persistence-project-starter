@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ public class Customer extends User {
     private String notes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -35,7 +36,8 @@ public class Customer extends User {
         super(name);
     }
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -67,5 +69,15 @@ public class Customer extends User {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void addPet(Pet pet) {
+        pets.add(pet);
+        pet.setCustomer(this);
+    }
+
+    public void removePet(Pet pet) {
+        pets.remove(pet);
+        pet.setCustomer(null);
     }
 }

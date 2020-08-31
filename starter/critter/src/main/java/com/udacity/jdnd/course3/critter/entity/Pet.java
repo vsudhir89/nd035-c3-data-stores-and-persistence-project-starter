@@ -50,7 +50,8 @@ public class Pet {
     @Cascade(CascadeType.ALL)
     private List<Schedule> schedules;
 
-    public Pet() { }
+    public Pet() {
+    }
 
     public Pet(String name, PetType type, LocalDate birthDate, String notes) {
         this.name = name;
