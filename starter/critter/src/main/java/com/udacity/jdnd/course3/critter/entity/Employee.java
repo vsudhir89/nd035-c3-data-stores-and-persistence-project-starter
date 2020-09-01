@@ -10,14 +10,25 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Nationalized;
 
 @Entity
-public class Employee extends User {
+public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @Nationalized
+    private String name;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
@@ -39,11 +50,28 @@ public class Employee extends User {
     private List<Schedule> schedules = new ArrayList<>();
 
     public Employee(String name, Set<EmployeeSkill> skills) {
-        super(name);
+        this.name = name;
         this.skills = skills;
     }
 
-    public Employee() {}
+    public Employee() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Set<EmployeeSkill> getSkills() {
         return skills;
