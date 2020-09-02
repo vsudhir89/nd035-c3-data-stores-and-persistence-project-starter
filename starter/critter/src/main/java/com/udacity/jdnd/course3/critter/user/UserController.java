@@ -121,7 +121,19 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        DayOfWeek requestedDayOfWeek = employeeDTO.getDate().getDayOfWeek();
+        List<Employee> employeeMatch = employeeService
+                .getEmployeesForMatchingSkillsAndDate(employeeDTO.getSkills(), requestedDayOfWeek);
+
+        List<EmployeeDTO> employeesToReturn = new ArrayList<>();
+        if (employeeMatch != null && !employeeMatch.isEmpty()) {
+            employeeMatch.forEach(employee -> {
+                EmployeeDTO employeeToReturn = new EmployeeDTO();
+                BeanUtils.copyProperties(employee, employeeToReturn);
+                employeesToReturn.add(employeeToReturn);
+            });
+        }
+        return employeesToReturn;
     }
 
 }

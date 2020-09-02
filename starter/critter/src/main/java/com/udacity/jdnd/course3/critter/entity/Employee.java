@@ -16,10 +16,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Nationalized;
 
+@NamedQuery(
+        name = "Employee.findAllBySkillsInAndDaysAvailableInNamedQuery",
+        query = "select e from Employee e "
+                + "join e.skills sk "
+                + "join e.daysAvailable da "
+                + "where sk in :skills and da in :daysAvailable group by e.id having count(e.id) = :skillsCount"
+)
 @Entity
 public class Employee {
 
@@ -95,5 +103,16 @@ public class Employee {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee {" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", skills=" + skills +
+                ", daysAvailable=" + daysAvailable +
+                ", schedules=" + schedules +
+                '}';
     }
 }

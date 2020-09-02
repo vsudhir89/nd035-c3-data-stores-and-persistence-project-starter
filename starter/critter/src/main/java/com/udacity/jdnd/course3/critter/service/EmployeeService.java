@@ -2,13 +2,16 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
+import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import java.time.DayOfWeek;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityNotFoundException;
-import org.hibernate.annotations.common.util.impl.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,5 +36,17 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    public List<Employee> getEmployeesForMatchingSkillsAndDate(Set<EmployeeSkill> skills,
+            DayOfWeek dayOfWeek) {
+        Long skillCount = (long) skills.size();
+        Set<DayOfWeek> dayAvailabilityRequested = new HashSet<>();
+        dayAvailabilityRequested.add(dayOfWeek);
+        if (skillCount >= 1 && dayOfWeek != null) {
+            return employeeRepository.findAllBySkillsInAndDaysAvailableInNamedQuery(skills,
+                    skillCount, dayAvailabilityRequested);
+        }
+        return null;
     }
 }
