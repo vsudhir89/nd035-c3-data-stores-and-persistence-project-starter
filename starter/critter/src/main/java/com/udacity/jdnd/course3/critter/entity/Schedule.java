@@ -57,7 +57,7 @@ public class Schedule {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @Cascade(CascadeType.ALL)
-    private Set<EmployeeSkill> activities = new HashSet<>();
+    private Set<EmployeeSkill> skills = new HashSet<>();
 
     public Schedule() { }
 
@@ -101,11 +101,11 @@ public class Schedule {
         this.customers = customers;
     }
 
-    public Set<EmployeeSkill> getActivities() {
-        return activities;
+    public Set<EmployeeSkill> getSkills() {
+        return skills;
     }
 
-    public void setActivities(Set<EmployeeSkill> activities) {
-        this.activities = activities;
+    public void setSkills(Set<EmployeeSkill> skills) {
+        this.skills = skills;
     }
 }
