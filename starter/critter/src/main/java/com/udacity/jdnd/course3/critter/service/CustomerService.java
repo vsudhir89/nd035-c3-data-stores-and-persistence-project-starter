@@ -47,7 +47,6 @@ public class CustomerService {
         if (pets != null && !pets.isEmpty()) {
             customers = customerRepository.findAllByPetsIn(pets);
         }
-        // TODO Try throwing an exception here
         return customers;
     }
 }
