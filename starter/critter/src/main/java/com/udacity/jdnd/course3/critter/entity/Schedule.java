@@ -59,7 +59,12 @@ public class Schedule {
     @Cascade(CascadeType.ALL)
     private Set<EmployeeSkill> skills = new HashSet<>();
 
-    public Schedule() { }
+    public Schedule() {
+    }
+
+    public Schedule(LocalDate date) {
+        this.date = date;
+    }
 
     public Long getId() {
         return id;
