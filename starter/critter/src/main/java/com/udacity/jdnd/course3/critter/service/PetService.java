@@ -32,4 +32,12 @@ public class PetService {
     public List<Pet> getAllPets() {
         return petRepository.findAll();
     }
+
+    public List<Pet> getAllPetsForIds(List<Long> ids) {
+        List<Pet> petsForIds = null;
+        if (ids != null && !ids.isEmpty()) {
+            petsForIds = petRepository.findAllByIdIn(ids);
+        }
+        return  petsForIds;
+    }
 }

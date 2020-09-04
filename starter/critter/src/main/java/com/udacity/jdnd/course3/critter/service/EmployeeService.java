@@ -4,7 +4,6 @@ import com.udacity.jdnd.course3.critter.entity.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
 import java.time.DayOfWeek;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,5 +47,21 @@ public class EmployeeService {
                     skillCount, dayAvailabilityRequested);
         }
         return null;
+    }
+
+    public List<Employee> getEmployeesForIds(List<Long> ids) {
+        List<Employee> employees = null;
+        if (ids != null && !ids.isEmpty()) {
+            employees = employeeRepository.findAllById(ids);
+        }
+        return employees;
+    }
+
+    public List<Employee> getEmployeesForSkills(Set<EmployeeSkill> skillsRequested) {
+        List<Employee> employees = null;
+        if (skillsRequested != null && !skillsRequested.isEmpty()) {
+            employees = employeeRepository.findAllBySkillsIn(skillsRequested);
+        }
+        return employees;
     }
 }

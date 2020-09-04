@@ -41,4 +41,13 @@ public class CustomerService {
         Optional<Customer> optionalCustomer = petOwnerList.stream().findFirst();
         return optionalCustomer.orElse(null);
     }
+
+    public List<Customer> getAllCustomersForPets(List<Pet> pets) {
+        List<Customer> customers = null;
+        if (pets != null && !pets.isEmpty()) {
+            customers = customerRepository.findAllByPetsIn(pets);
+        }
+        // TODO Try throwing an exception here
+        return customers;
+    }
 }

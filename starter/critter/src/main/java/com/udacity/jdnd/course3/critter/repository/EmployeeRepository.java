@@ -11,5 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findAllBySkillsInAndDaysAvailableInNamedQuery(Set<EmployeeSkill> skills, Long skillsCount, Set<DayOfWeek> daysAvailable);
+    List<Employee> findAllBySkillsInAndDaysAvailableInNamedQuery(Set<EmployeeSkill> skills,
+            Long skillsCount, Set<DayOfWeek> daysAvailable);
+
+    List<Employee> findAllByIdIn(List<Long> ids);
+
+    List<Employee> findAllBySkillsIn(Set<EmployeeSkill> skills);
 }

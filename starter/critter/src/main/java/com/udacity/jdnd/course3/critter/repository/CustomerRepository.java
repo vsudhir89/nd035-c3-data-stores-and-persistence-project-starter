@@ -13,4 +13,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("select c from Customer c where :pet member of c.pets ")
     List<Customer> findAllByPet(@Param("pet") Pet pet);
+
+    List<Customer> findAllByPetsIn(List<Pet> pets);
 }
