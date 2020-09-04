@@ -48,15 +48,6 @@ public class Employee {
     @Cascade(CascadeType.ALL)
     private Set<DayOfWeek> daysAvailable = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "employee_schedule",
-            joinColumns = {@JoinColumn(name = "employee_id")},
-            inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
-    )
-    @Cascade(CascadeType.ALL)
-    private List<Schedule> schedules = new ArrayList<>();
-
     public Employee(String name, Set<EmployeeSkill> skills) {
         this.name = name;
         this.skills = skills;
@@ -97,14 +88,6 @@ public class Employee {
         this.daysAvailable = daysAvailable;
     }
 
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
     @Override
     public String toString() {
         return "Employee {" +
@@ -112,7 +95,6 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", skills=" + skills +
                 ", daysAvailable=" + daysAvailable +
-                ", schedules=" + schedules +
                 '}';
     }
 }

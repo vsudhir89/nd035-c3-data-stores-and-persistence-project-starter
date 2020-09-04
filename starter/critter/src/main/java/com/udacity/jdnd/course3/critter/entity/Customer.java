@@ -34,15 +34,6 @@ public class Customer {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Pet> pets = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "schedule_customer",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
-    )
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<Schedule> schedules;
-
     public Customer(String name) {
         this.name = name;
     }
@@ -80,14 +71,6 @@ public class Customer {
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
-    }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
     }
 
     public String getNotes() {
