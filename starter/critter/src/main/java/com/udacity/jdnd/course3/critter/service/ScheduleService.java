@@ -1,5 +1,8 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.entity.Customer;
+import com.udacity.jdnd.course3.critter.entity.Employee;
+import com.udacity.jdnd.course3.critter.entity.Pet;
 import com.udacity.jdnd.course3.critter.entity.Schedule;
 import com.udacity.jdnd.course3.critter.repository.ScheduleRepository;
 import java.util.List;
@@ -27,7 +30,7 @@ public class ScheduleService {
             } catch (EntityNotFoundException e) {
                 Logger.getAnonymousLogger().log(Level.ALL, "Requested entity is not found");
             }
-        } else  {
+        } else {
             throw new EntityNotFoundException();
         }
         return schedule;
@@ -35,5 +38,26 @@ public class ScheduleService {
 
     public List<Schedule> getAllSchedules() {
         return scheduleRepository.findAll();
+    }
+
+    public List<Schedule> getScheduleForEmployee(Employee employee) {
+        if (employee != null) {
+            return scheduleRepository.findAllByEmployee(employee);
+        }
+        return null;
+    }
+
+    public List<Schedule> getScheduleForPet(Pet pet) {
+        if (pet != null) {
+            return scheduleRepository.findAllByPet(pet);
+        }
+        return null;
+    }
+
+    public List<Schedule> getScheduleForCustomer(Customer customer) {
+        if (customer != null) {
+            return scheduleRepository.findAllByCustomer(customer);
+        }
+        return null;
     }
 }
