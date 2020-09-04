@@ -41,15 +41,6 @@ public class Pet {
     @Column(length = 500)
     private String notes;
 
-    @ManyToMany
-    @JoinTable(
-            name = "pet_schedule",
-            joinColumns = {@JoinColumn(name = "pet_id")},
-            inverseJoinColumns = {@JoinColumn(name = "schedule_id")}
-    )
-    @Cascade(CascadeType.ALL)
-    private List<Schedule> schedules;
-
     public Pet() {
     }
 
